@@ -1,9 +1,6 @@
 <?php
 session_start();
 include("./fonction.php"); // on inclut le fichier des fonctions pour pouvoir les appeler
-
-$articles = getArticles(); // je récupère la liste des articles que je stocke dans une variable
-
 include("./head.php");
 
 // si le panier n'existe pas, on l'initialise en tant que tableau vide. Le créer sur la page index car cette page est le point d'entée de l'utilisateur.
@@ -25,7 +22,15 @@ if(!isset($_SESSION["panier"])) { // grâce à isset on vérifie que la clé pan
         <div class="container">
             <div class="row">
 
-                <?php foreach ($articles as $article) { ?>
+                <?php 
+
+                // je récupère la liste des articles que je stocke dans une variable
+                $articles = getArticles();
+                
+                // je boucle dessus pour les afficher
+                foreach ($articles as $article) { 
+                
+                ?>
 
                     <!-- Code affiché pour chaque article : CARD Bootstrap -->
                     <div class="card col-md-4">

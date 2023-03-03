@@ -54,13 +54,17 @@ function addToCart($articleToAdd) {
     // on va vérifier que l'article n'est pas déjà présent dans le panier
 
     // pour cela, on parcourt le panier pour examiner chaque article
-    foreach ($_SESSION["panier"] as $articleCart) {
+    // 1 er élément : index de la boucle = $i
+    // 2ème élément : condition de maintien
+    // 3ème élément : évolution de $i à la fin de chaque boucle
+
+    for ($i = 0; $i < count($_SESSION["panier"]); $i++) {
 
         // on vérifie que l'id de l'article du panier correspond à l'id de l'article qu'on veut ajouter
-        if ($articleCart["id"] == $articleToAdd["id"]) {
+        if ($_SESSION["panier"][$i]["id"] == $articleToAdd["id"]) {
 
             // si c'est le cas, quantité +1, puis on sort de la fonction avec message
-            $articleCart["quantite"] += 1;
+            $_SESSION["panier"][$i]["quantite"] += 1;
             echo "<script> alert(\"Article ajouté au panier !\");</script>";
             return; // le return ici permet de sortir de la fonction entièrement
         }
@@ -71,3 +75,14 @@ function addToCart($articleToAdd) {
     array_push($_SESSION["panier"], $articleToAdd); // on ajoute l'article dans le panier
     echo "<script> alert(\"Article ajouté au panier !\");</script>";
 }
+
+// fonction pour afficher les articles dans la page panier
+function showArticles() {
+    foreach ($_SESSION["panier"] as $cartArticles) {
+       echo $cartArticles["name"];
+       echo $cartArticles["price"];
+       echo $cartArticles["description"];
+       echo $cartArticles["quantite"];
+}
+}
+

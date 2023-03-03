@@ -1,0 +1,25 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+nav {
+    background-color: white;
+    color:#86a395;
+}
+
+#logo {
+    height: 70px;
+    width:auto;
+}
+
+#btn_voir {
+    background-color: white;
+}
+
+.btn_ajout {
+    background-color: #86a395;
+}
+
+footer {
+    background-color: #86a395;
+}

@@ -34,7 +34,7 @@ if (isset($_GET["idArticle"])) {
 
             <div class="col-md-8">
 
-                <table>
+                <table class="table text-center">
                     <tr>
 
                         <th>Produit</th>
@@ -43,19 +43,8 @@ if (isset($_GET["idArticle"])) {
                         <th>Quantité</th>
                         <th>Sous-total</th>
                     </tr>
-                    <tr>
-                        <td><img src="<?php echo "./images/" . $article["image"] ?>" class="img-fluid rounded-start" alt="..."></td>
-                        <td colspan="2" class="d-flex flex-column">
-                            <h5 class="card-title"><?php echo $article["name"] ?></h5>
-                            <p class="card-text"><?php echo $article["description"] ?></p>
-                        </td>
-                        <td>
-                            <p class="card-text"><?php echo $article["price"] ?> €</p>
-                        </td>
-                        <td>Quantité</td>
-                        <td>Sous-total</td>
+            <?php showArticlesInCard(); ?>
 
-                    </tr>
                 </table>
 
 
@@ -67,6 +56,7 @@ if (isset($_GET["idArticle"])) {
         <?php
         // fonction pour afficher les articles dans la page panier
         showArticles();
+       
         ?>
 
     </main>

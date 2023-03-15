@@ -2,7 +2,8 @@
 
 // Renvoie la liste des articles
 
-function getArticles() {
+function getArticles()
+{
     return [
         [
             "id" => 1,
@@ -35,7 +36,8 @@ function getArticles() {
 
 // récupérer l'article avec toutes ses infos en fonction de l'ID
 
-function getArticleFromId($id) {
+function getArticleFromId($id)
+{
     // on récupère la liste des articles via getArticles et on la stock dans une variable
     $articles = getArticles();
 
@@ -50,7 +52,8 @@ function getArticleFromId($id) {
 
 // On crée une fonction qui nous permet d'ajouter un produit au panier
 
-function addToCart($articleToAdd) {
+function addToCart($articleToAdd)
+{
     // on va vérifier que l'article n'est pas déjà présent dans le panier
 
     // pour cela, on parcourt le panier pour examiner chaque article
@@ -77,12 +80,50 @@ function addToCart($articleToAdd) {
 }
 
 // fonction pour afficher les articles dans la page panier
-function showArticles() {
+function showArticles()
+{
     foreach ($_SESSION["panier"] as $cartArticles) {
-       echo $cartArticles["name"];
-       echo $cartArticles["price"];
-       echo $cartArticles["description"];
-       echo $cartArticles["quantite"];
-}
+        echo $cartArticles["name"];
+        echo $cartArticles["price"];
+        echo $cartArticles["description"];
+        echo $cartArticles["quantite"];
+    }
 }
 
+function showArticlesInCard()
+{
+
+    foreach ($_SESSION["panier"] as $article) { ?>
+        <tr>
+            <td><img src="<?php echo "./images/" . $article["image"] ?>" class="img-fluid rounded-start produit" alt="...">
+            </td>
+            <td>
+                <h5 class="card-title">
+                    <?php echo $article["name"] ?>
+                </h5>
+                <p class="card-text">
+                    <?php echo $article["description"] ?>
+                </p>
+            </td>
+            <td>
+                <p class="card-text">
+                    <?php echo $article["price"] ?> €
+                </p>
+            </td>
+            <td>
+                <form method="post" action="">
+                <button type="button" class="btn" value=""><i class="fa-solid fa-minus"></i></button>
+                <input class="quantite"  value="<?php  echo $article["quantite"] ?>" readonly >
+                <button type="button" class="btn" value=""><i class="fa-solid fa-plus"></i></button>
+                </form>
+            </td>
+            <td>
+                <?php echo $article["quantite"] * $article['price'] ?> €
+            </td>
+
+        </tr>
+
+
+    <?php }
+    return $article;
+}

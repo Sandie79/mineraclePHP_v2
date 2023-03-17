@@ -9,6 +9,13 @@ if (!isset($_SESSION["panier"])) { // grâce à isset on vérifie que la clé pa
     // $_SESSION["panier"] = array ();
 }
 
+// pour déclencher le vidage
+if (isset($_POST["videPanier"])) {
+    deleteToCart();
+}
+
+// var_dump($_SESSION).
+
 ?>
 
 
@@ -21,14 +28,16 @@ if (!isset($_SESSION["panier"])) { // grâce à isset on vérifie que la clé pa
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col" id="hero">
-                    <h1 class="mx-auto">Bienvenue</h1>
+                <div class="col" id="hero_accueil">
+                    <h1 class="mx-auto">Bienvenue sur votre boutique bien-être</h1>
+                    <a href="#" class="button button-full">Catalogue</a>
+                    <a href="#" class="button button-ghost">Contactez-nous</a>
                 </div>
             </div>
         </div>
 
         <div class="container">
-            <div class="row">
+            <div class="row m-5">
 
                 <?php
 
@@ -41,18 +50,22 @@ if (!isset($_SESSION["panier"])) { // grâce à isset on vérifie que la clé pa
                     ?>
 
                     <!-- Code affiché pour chaque article : CARD Bootstrap -->
-                    <div class="card col-md-4">
+                    <div class="col-md-4 p-3">
+                    <div class="card">
+
                         <img src="<?php echo "./images/" . $article["image"] ?>" class="card-img-top w-75 mx-auto"
                             alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">
+                            <h5 class="card-title text-center" style="font-size:2.25rem">
                                 <?php echo $article["name"] ?>
                             </h5>
-                            <p class="card-text">
-                                <?php echo $article["price"] ?> €
-                            </p>
-                            <p class="card-text">
+                            
+                            <p class="card-text text-center">
                                 <?php echo $article["description"] ?>
+                            </p>
+
+                            <p class="card-text text-center">
+                                <?php echo $article["price"] ?> €
                             </p>
 
                             <div class="card-body">
@@ -60,16 +73,15 @@ if (!isset($_SESSION["panier"])) { // grâce à isset on vérifie que la clé pa
                                 <!-- Bouton voir + -->
                                 <form action="./produit.php" method="GET">
                                     <input type="hidden" name="idArticle" value="<?php echo $article["id"] ?>">
-                                    <button class="btn btn-outline-secondary mb-2" id="btn_voir" type="submit">Voir
-                                        +</button>
+                                    <a href="#" class="button button-ghost" id="btn_voir" type="submit">Voir +</a>
                                 </form>
 
                                 <!-- Bouton Ajout au panier -->
                                 <form action="./panier.php" method="GET">
                                     <input type="hidden" name="idArticle" value="<?php echo $article["id"] ?>">
-                                    <button class="btn btn_ajout" type="submit">Ajouter au panier</button>
+                                    <a href="./panier.php" class="button button-full" id="btn_ajout" type="submit">Ajouter au panier</a>
                                 </form>
-
+                            </div>
                             </div>
                         </div>
                     </div>

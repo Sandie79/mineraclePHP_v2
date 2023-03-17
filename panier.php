@@ -19,7 +19,21 @@ if (isset($_GET["idArticle"])) {
     addToCart($article);
 }
 
-// var_dump($_SESSION["panier"]);
+// mettre en place une structure en if isset pour vérifier l'existence d'un des deux inputs créés à l'étape précédente (en clair, on vérifie si on a transmis ce formulaire de modif quantité).
+if (isset($_POST["idArticleModifie"])) {
+    changeQuantity($_POST["idArticleModifie"], $_POST["quantite"]);
+}
+
+// mettre en place une structure en if isset pour vérifier l'existence de cet input (on vérifie si on a transmis ce formulaire de suppression).
+if (isset($_POST["idArticleSupprime"])) {
+    removeToCart($_POST["idArticleSupprime"]);
+}
+
+// pour vérifier que le panier est bien vidé
+if (isset($_POST["videPanier"])) {
+    deleteToCart();
+}
+
 
 ?>
 
@@ -28,36 +42,71 @@ if (isset($_GET["idArticle"])) {
     <?php include("./header.php") ?>
 
     <main>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col" id="hero_panier">
+                    <h1 class="mx-auto">Votre panier</h1>
+                </div>
+            </div>
+        </div>
+
         <div class="container">
 
-            <h1>Votre panier</h1>
-
-            <div class="col-md-8">
-
+            <div class="col-md-12 mt-5">
                 <table class="table text-center">
                     <tr>
-
                         <th>Produit</th>
                         <th>Description</th>
-                        <th>Prix</th>
+                        <th>Prix unitaire HT</th>
                         <th>Quantité</th>
-                        <th>Sous-total</th>
+                        <th>Sous-total HT</th>
                     </tr>
-            <?php showArticlesInCard(); ?>
-
+                    <?php showArticlesInCard(); ?>
                 </table>
 
-
+                <table class="table text-center">
+                    <th>Total</th>
+                    <th><?php echo totalPriceArticle(); ?> €</th>
+                </table>
             </div>
 
         </div>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="button button-full" data-bs-toggle="modal" data-bs-target="#exampleModal" id="btn_valider">Valider ma commande</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Félicitations !</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Montant total HT : <?php echo totalPriceArticle(); ?> € <br />
+                        Montant total TTC : <?php echo number_format(totalPriceArticle() * 1.2, 2, ",") ?> € <br />
+                        Frais de port : 5,00 € <br />
+                        Montant total : <?php echo number_format(5 + (totalPriceArticle() * 1.2), 2, ","); ?> €
+                    </div>
+                    <div class="modal-footer">
+
+                        <!-- Supprimer tout le contenu du panier avec le bouton "retour à l'accueil" -->
+                        <form method="POST" action="./index.php">
+                            <input type="hidden" name="videPanier" value="true">
+                            <button type="submit" class="btn btn_modif">Retour à l'accueil</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <?php
-        // fonction pour afficher les articles dans la page panier
-        showArticles();
-       
-        ?>
+        <!-- Supprimer tout le contenu du panier avec un bouton "Vider le panier" -->
+        <form method="POST" action="./panier.php">
+            <input type="hidden" name="videPanier" value="true">
+            <button type="submit" class="button button-ghost" id="btn_vider">Vider le panier</button>
+        </form>
 
     </main>
 

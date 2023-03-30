@@ -80,12 +80,13 @@ function addToCart($articleToAdd)
 }
 
 // fonction pour afficher les articles dans la page panier
-function showArticlesInCard() {
+function showArticlesInCard()
+{
 
-    foreach ($_SESSION["panier"] as $article) { 
-       ?> 
-       
-       <tr>
+    foreach ($_SESSION["panier"] as $article) {
+?>
+
+        <tr>
             <td><img src="<?php echo "./images/" . $article["image"] ?>" class="img-fluid rounded-start produit" alt="...">
             </td>
             <td>
@@ -104,35 +105,37 @@ function showArticlesInCard() {
             <td>
                 <!-- <form method="post" action="">
                 <button type="button" class="btn" value=""><i class="fa-solid fa-minus"></i></button>
-                <input class="quantite"  value="<?php  //echo $article["quantite"] ?>" readonly >
+                <input class="quantite"  value="<?php  //echo $article["quantite"] 
+                                                ?>" readonly >
                 <button type="button" class="btn" value=""><i class="fa-solid fa-plus"></i></button>
                 </form> -->
 
                 <!-- Modifier la quantité d'articles dans le panier avec un bouton "modifier" -->
                 <form method="POST" action="./panier.php">
-                <input type="number" name="quantite" value="<?php echo $article["quantite"] ?>" min="1" max="15">
-                <input type="hidden" name="idArticleModifie" value="<?php echo $article["id"] ?>">
-                <button type="submit" class="btn btn_modif"><i class="modif fa-solid fa-check"></i></button>
+                    <input type="number" name="quantite" value="<?php echo $article["quantite"] ?>" min="1" max="15">
+                    <input type="hidden" name="idArticleModifie" value="<?php echo $article["id"] ?>">
+                    <button type="submit" class="btn btn_modif"><i class="modif fa-solid fa-check"></i></button>
                 </form>
 
                 <!-- Supprimer la quantité d'articles dans le panier avec un bouton "Supprimer" -->
                 <form method="POST" action="./panier.php">
-                <input type="hidden" name="idArticleSupprime" value="<?php echo $article["id"] ?>">
-                <button type="submit" class="btn btn_modif"><i class="modif fa-solid fa-trash"></i></button>
+                    <input type="hidden" name="idArticleSupprime" value="<?php echo $article["id"] ?>">
+                    <button type="submit" class="btn btn_modif"><i class="modif fa-solid fa-trash"></i></button>
                 </form>
             </td>
             <td>
-                <?php 
+                <?php
                 echo $article["quantite"] * $article["price"]
                 ?> €
             </td>
-          </tr>
+        </tr>
 
-          <?php }
+<?php }
 }
 
 // Créer une fonction changeQuantity. Elle prend en paramètre l'id de l'article à modifier et la nouvelle quantité. Elle boucle sur le panier. dès qu'elle trouve l'article qui correspond à l'id en paramètre, elle change sa quantité en la remplaçant par la nouvelle.
-function changeQuantity($id, $newQuantity) {
+function changeQuantity($id, $newQuantity)
+{
     for ($i = 0; $i < count($_SESSION["panier"]); $i++) {
 
         if ($_SESSION["panier"][$i]["id"] == $id) {
@@ -144,11 +147,12 @@ function changeQuantity($id, $newQuantity) {
 }
 
 // Créer une fonction removeToCart. Elle prend en paramètre l'id de l'article à supprimer. Elle boucle sur le panier. Dès qu'elle trouve l'article qui correspond à l'id en paramètre, elle le retire du panier avec la fonction array_splice (voir doc php).
-function removeToCart($id) {
+function removeToCart($id)
+{
     for ($i = 0; $i < count($_SESSION["panier"]); $i++) {
 
         if ($_SESSION["panier"][$i]["id"] == $id) {
-            array_splice($_SESSION["panier"],$i,1) == $_POST["idArticleSupprime"];
+            array_splice($_SESSION["panier"], $i, 1) == $_POST["idArticleSupprime"];
             echo "<script> alert(\"Article supprimé !\");</script>";
             return;
         }
@@ -156,16 +160,18 @@ function removeToCart($id) {
 }
 
 // Créer une fonction pour afficher le montant total des articles
-function totalPriceArticle () {
+function totalPriceArticle()
+{
     $total = 0;
     foreach ($_SESSION["panier"] as $article) {
-    $total += $article["quantite"] * $article["price"];
+        $total += $article["quantite"] * $article["price"];
     }
     return $total;
 }
 
 // fonction pour vider le panier
-function deleteToCart () {
-       $_SESSION["panier"] = [];
-       echo "<script> alert(\"Votre panier est vide !\");</script>";
+function deleteToCart()
+{
+    $_SESSION["panier"] = [];
+    echo "<script> alert(\"Votre panier est vide !\");</script>";
 }

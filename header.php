@@ -6,13 +6,13 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto d-flex justify-content-between mt-3 text-center">
         <li class="hover nav-item px-4">
-          <a class="nav-link active" aria-current="page" href="./index.php"><i class="icone fa-solid fa-house fa-2x"></i></br><span class="text_icone">Accueil</span></a>
+          <a class="nav-link active" aria-current="page" href="./index.php"><i class="icone fa-solid fa-house fa-2x"></i></br><span class="text_icone" style="font-weight: bold">Accueil</span></a>
         </li>
         <li class="hover nav-item px-4">
-          <a class="nav-link" href="./panier.php"><i class="icone fa-solid fa-cart-shopping fa-2x"></i></br><span class="text_icone">Mon panier</span></a>
+          <a class="nav-link" href="./panier.php"><i class="icone fa-solid fa-cart-shopping fa-2x"></i></br><span class="text_icone" style="font-weight: bold">Mon panier</span></a>
         </li>
         <li class="hover nav-item px-4">
-          <i class="icone fa-solid fa-user fa-2x pt-2"></i></br><span class="text_icone">Mon profil</span>
+          <i class="icone fa-solid fa-user fa-2x pt-2"></i></br><span class="text_icone" style="font-weight: bold">Mon profil</span>
         </li>
       </ul>
     </div>

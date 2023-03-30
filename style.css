@@ -1,11 +1,16 @@
 /* -- PAREMETRES GENERAUX -- */
 
 * {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Julius Sans One', sans-serif;
 }
 
-p, h1  {
+h1  {
     color: #1b363b;
+    font-weight: bold;
+}
+
+p {
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 h1 {
@@ -25,11 +30,13 @@ h1 {
     text-decoration: none;
     transition: background-color 1s, color 1s, border 1s;
     font-size: 25px;
+    font-weight: bold;
 }
 
 .button-full {
     background-color: #86a395;
     color:white;
+    border-color:#86a395;
     margin-left:4%;
     margin-right:30px;
 }
@@ -158,6 +165,7 @@ footer {
 .footer-link {
     color:white;
     text-decoration: none;
+    font-weight: bold;
 }
 
 .footer-link:hover {

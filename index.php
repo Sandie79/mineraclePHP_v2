@@ -56,7 +56,7 @@ if (isset($_POST["videPanier"])) {
                         <img src="<?php echo "./images/" . $article["image"] ?>" class="card-img-top w-75 mx-auto"
                             alt="...">
                         <div class="card-body">
-                            <h5 class="card-title text-center" style="font-size:2.25rem">
+                            <h5 class="card-title text-center" style="font-size:2.25rem; font-weight: bold">
                                 <?php echo $article["name"] ?>
                             </h5>
                             
@@ -73,13 +73,13 @@ if (isset($_POST["videPanier"])) {
                                 <!-- Bouton voir + -->
                                 <form action="./produit.php" method="GET">
                                     <input type="hidden" name="idArticle" value="<?php echo $article["id"] ?>">
-                                    <a href="#" class="button button-ghost" id="btn_voir" type="submit">Voir +</a>
+                                    <input class="button button-ghost" id="btn_voir" type="submit" value="Voir +">
                                 </form>
 
                                 <!-- Bouton Ajout au panier -->
                                 <form action="./panier.php" method="GET">
                                     <input type="hidden" name="idArticle" value="<?php echo $article["id"] ?>">
-                                    <a href="./panier.php" class="button button-full" id="btn_ajout" type="submit">Ajouter au panier</a>
+                                    <input class="button button-full" id="btn_ajout" type="submit" value="Ajouter au panier">
                                 </form>
                             </div>
                             </div>

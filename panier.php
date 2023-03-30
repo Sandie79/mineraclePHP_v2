@@ -73,8 +73,7 @@ if (isset($_POST["videPanier"])) {
 
         </div>
 
-        <!-- Button trigger modal -->
-        <button type="button" class="button button-full" data-bs-toggle="modal" data-bs-target="#exampleModal" id="btn_valider">Valider ma commande</button>
+
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -102,12 +101,19 @@ if (isset($_POST["videPanier"])) {
             </div>
         </div>
 
-        <!-- Supprimer tout le contenu du panier avec un bouton "Vider le panier" -->
-        <form method="POST" action="./panier.php">
-            <input type="hidden" name="videPanier" value="true">
-            <button type="submit" class="button button-ghost" id="btn_vider">Vider le panier</button>
-        </form>
-
+        <div class="row">
+            <!-- Button trigger modal -->
+            <div class="col-md-6 text-center">
+                <button type="button" class="button button-full" data-bs-toggle="modal" data-bs-target="#exampleModal" id="btn_valider">Valider ma commande</button>
+            </div>
+            <!-- Supprimer tout le contenu du panier avec un bouton "Vider le panier" -->
+            <div class="col-md-6 text-center">
+                <form method="POST" action="./panier.php">
+                    <input type="hidden" name="videPanier" value="true">
+                    <button type="submit" class="button button-ghost" id="btn_vider">Vider le panier</button>
+                </form>
+            </div>
+        </div>
     </main>
 
     <?php include("./footer.php") ?>

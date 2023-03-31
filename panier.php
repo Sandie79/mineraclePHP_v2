@@ -46,7 +46,7 @@ if (isset($_POST["videPanier"])) {
         <div class="container-fluid">
             <div class="row">
                 <div class="col" id="hero_panier">
-                    <h1 class="mx-auto">Votre panier</h1>
+                    <h1 class="title_page mx-auto">Votre panier</h1>
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@ if (isset($_POST["videPanier"])) {
     deleteToCart();
 }
 
-// var_dump($_SESSION).
+// var_dump(getArticles());
 
 ?>
 
@@ -44,49 +44,8 @@ if (isset($_POST["videPanier"])) {
                 // je récupère la liste des articles que je stocke dans une variable
                 $articles = getArticles();
 
-                // je boucle dessus pour les afficher
-                foreach ($articles as $article) {
-
-                    ?>
-
-                    <!-- Code affiché pour chaque article : CARD Bootstrap -->
-                    <div class="col-md-4 p-3">
-                    <div class="card">
-
-                        <img src="<?php echo "./images/" . $article["image"] ?>" class="card-img-top w-75 mx-auto"
-                            alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title text-center" style="font-size:2.25rem; font-weight: bold">
-                                <?php echo $article["name"] ?>
-                            </h5>
-                            
-                            <p class="card-text text-center">
-                                <?php echo $article["description"] ?>
-                            </p>
-
-                            <p class="card-text text-center">
-                                <?php echo $article["price"] ?> €
-                            </p>
-
-                            <div class="card-body">
-
-                                <!-- Bouton voir + -->
-                                <form action="./produit.php" method="GET">
-                                    <input type="hidden" name="idArticle" value="<?php echo $article["id"] ?>">
-                                    <input class="button button-ghost" id="btn_voir" type="submit" value="Voir +">
-                                </form>
-
-                                <!-- Bouton Ajout au panier -->
-                                <form action="./panier.php" method="GET">
-                                    <input type="hidden" name="idArticle" value="<?php echo $article["id"] ?>">
-                                    <input class="button button-full" id="btn_ajout" type="submit" value="Ajouter au panier">
-                                </form>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Fin de la CARD Bootstrap -->
-                <?php } ?>
+                showArticles($articles);
+                ?>
 
 
             </div>
@@ -97,5 +56,3 @@ if (isset($_POST["videPanier"])) {
 
     <?php include("./footer.php") ?>
 </body>
-
-</html>

@@ -25,13 +25,12 @@ if (!isset($_SESSION["panier"])) { // grâce à isset on vérifie que la clé pa
         <div class="container">
             <div class="row">
                 <div class="card col-md-8 offset-md-2 text-center">
-                    <img src="<?php echo "./images/" . $article["image"] ?>" class="card-img-top w-50 mx-auto" alt="<?php $article["name"] ?>">
+                    <img src="<?php echo "./images/" . $article["image"] ?>" class="card-img-top w-50 mx-auto" alt="<?php $article["nom"] ?>">
                     <div class="card-body">
-                        <h5 class="card-title" style="font-size:2.25rem; font-weight: bold"><?php echo $article["name"] ?></h5>
-                        <p class="card-text"><?php echo $article["price"] ?> €</p>
+                        <h5 class="card-title" style="font-size:1.75rem; font-weight: bold"><?php echo $article["nom"] ?></h5>
+                        <p class="card-text"><?php echo $article["prix"] ?> €</p>
                         <p class="card-text"><?php echo $article["description"] ?></p>
-                        <p class="card-text"><?php echo $article["detailed_description"] ?></p>
-
+                        <p class="card-text"><?php echo $article["description_detaillee"] ?></p>
 
                         <div class="card-body">
 

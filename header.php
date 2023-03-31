@@ -9,6 +9,9 @@
           <a class="nav-link active" aria-current="page" href="./index.php"><i class="icone fa-solid fa-house fa-2x"></i></br><span class="text_icone" style="font-weight: bold">Accueil</span></a>
         </li>
         <li class="hover nav-item px-4">
+          <a class="nav-link active" aria-current="page" href="./gamme.php"><i class="icone fa-solid fa-shop fa-2x"></i></br><span class="text_icone" style="font-weight: bold">Gamme de produits</span></a>
+        </li>
+        <li class="hover nav-item px-4">
           <a class="nav-link" href="./panier.php"><i class="icone fa-solid fa-cart-shopping fa-2x"></i></br><span class="text_icone" style="font-weight: bold">Mon panier</span></a>
         </li>
         <li class="hover nav-item px-4">

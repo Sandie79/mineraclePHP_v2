@@ -1,54 +1,132 @@
 <?php
 
+// Connexion à la base de données
+
+function getConnection()
+{
+
+    // try : je tente une connexion
+    try {
+        $db = new PDO( // PDO est une extension native de php pour se connecter à une base de données, c'est une class (fichier qui permet de représenter un élément du monde réel trop complexe pour être représenté en code avec une simple chaînde de caractère. La classe se compose d'attributs (caractéristiques) et de méthodes (fonction)) / info : sgbd, nom base, adresse (host) + encodage
+            "mysql:host=localhost;dbname=mineraclephp_v2;charset=utf8",
+            "root", // pseudo utilisateur (root en local)
+            "", // mot de passe (aucun en local)
+            array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC) // 
+        ); // options PDO : 1)ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION = permet d'afficher les erreurs 2) DO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC = récupération des données simplifiées
+
+        // si ça ne marche pas : je mets fin au code php en affichant l'erreur
+    } catch (Exception $erreur) { // je récupère l'erreur en paramètre
+        die("Erreur : " . $erreur->getMessage()); // die permet d'arrêter tout le code, je l'affiche et je mets fin au script
+    }
+
+    // je retourne la connexion stockée dans une variable
+    return $db;
+}
+
+
 // Renvoie la liste des articles
 
 function getArticles()
 {
-    return [
-        [
-            "id" => 1,
-            "name" => "Améthyste",
-            "price" => 7.99,
-            "description" => "Pierre naturelle pour le calme",
-            "detailed_description" => "De nos jours, quand on porte cette pierre sur soi, elle aide à combattre les émotions négatives telle que la colère, la rancœur, le ressentiment, et les addictions comme le tabagisme et l'alcoolisme. Elle calme les personnes colérique ou impulsif. L'améthyste est très utiliser pas les personnes désireuse de développer leurs capacités extrasensorielles. Elle aide essentiellement à trouver le calme, la paix et la sérénité ainsi qu\'a se recentrer. Selon la taille et le volume, optez pour la fleur de vie ou le nettoyage à la mains.",
-            "image" => "amethyste.jpg"
-        ],
+    // je me connecte à la base de données
+    $db = getConnection(); // je stocke la connexion dans la variable $db qui est une instance de la class PDO
 
-        [
-            "id" => 2,
-            "name" => "Quartz Rose",
-            "price" => 7.99,
-            "description" => "Pierre naturelle apaisante",
-            "detailed_description" => "Cette pierre contribue à l\'amour de soi. Il permet à celui qui le porte de se retrouver, d\'apprendre à aimer profondément  ses qualités et ses imperfections, d\'être patient, doux et attentif avec lui-même. Le Quartz Rose est aussi une très bonne pierre pour les nouveau-nés. Les enfants de tous âges l\'apprécient beaucoup car il a un effet très calmant et est également apaisant. Elle s\'adapte au champ énergétique du porteur. La pierre vous aideras à prendre soin de vous et à vous connecteras avec votre côté féminin.",
-            "image" => "quartz.jpg"
-        ],
+    // je prépare une requête qui va récupérer tous les articles
+    $results = $db->query("SELECT * FROM articles"); // -> permet d'accéder à la fonction query de la class PDO et $db est une instance de la class PDO
 
-        [
-            "id" => 3,
-            "name" => "Aventurine",
-            "price" => 6.99,
-            "description" => "Pierre naturelle contre le stress",
-            "detailed_description" => "L\'aventurine est une pierre qui soulage tout stress et toute anxiété face à l\'avenir. Il sera un allié de poids pendant la période des examens. Ce minéral est idéal pour les enfants et les adolescents car il contribue à la croissance physique et au développement intellectuel. Cette pierre permet d\'augmenter la patience avec soi-même, les autres, les choses et le temps. Si vous avez un tempérament nerveux ou des approches brusques, l\'aventurine affaiblit votre nature, elle vous est donc très utile.",
-            "image" => "aventurine.jpg"
-        ],
-    ];
+    // j'exécute ma requête et je récupère les données et je renvoie les résultats
+    return $results->fetchAll(); // quand on fait un SELECT il faut aller chercher les résultats. Le fetchAll permet de récupérer les résultats
+}
+
+// Récupérer tous les articles par gammes
+
+function getGammes()
+{
+    // je me connecte à la base de données
+    $db = getConnection();
+
+    // je prépare une requête qui va récupérer toutes les gammes
+    $results = $db->query("SELECT * FROM gammes");
+
+    // j'exécute ma requête et je récupère les données et je renvoie les résultats
+    return $results->fetchAll();
+}
+
+// Récupérer les articles correspondant à la gamme et les renvoyer
+
+function getArticlesByGamme($id_gamme) {
+    $db = getConnection();
+
+    // je prépare une requête qui va récupérer tous les articles
+    $query = $db->prepare("SELECT * FROM articles WHERE id_gamme = :id_gamme"); // ne jamais mettre de variable php dans une requête SQL brute pour plus de sécurité
+    
+    // je lance ma requête en indiquant à quoi correspond ma variable SQL
+    $query->execute(array(
+        "id_gamme" => $id_gamme ));
+
+    // j'exécute ma requête et je récupère les données et je renvoie les résultats
+    return $query->fetchAll();
 }
 
 // récupérer l'article avec toutes ses infos en fonction de l'ID
 
 function getArticleFromId($id)
 {
-    // on récupère la liste des articles via getArticles et on la stock dans une variable
-    $articles = getArticles();
+$db = getConnection();
+$query = $db->prepare("SELECT * FROM articles WHERE id = ?"); // ne jamais mettre de variable php dans une requête SQL brute pour plus de sécurité
+$query->execute([$id]);
+return $query->fetch(); // un seul résultat donc pas fecthAll
+}
 
-    // boucler sur la liste des articles avec un foreach
+// je boucle dessus pour les afficher
+function showArticles($articles)
+{
+
     foreach ($articles as $article) {
-        // dès que l'article comporte l'ID en paramètre, on le renvoie
-        if ($article["id"] == $id) {
-            return $article;
-        }
+
+?>
+
+        <!-- Code affiché pour chaque article : CARD Bootstrap -->
+        <div class="col-md-4 p-3">
+            <div class="card">
+
+                <img src="<?php echo "./images/" . $article["image"] ?>" class="card-img-top w-75 mx-auto" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title text-center" style="font-size:2.25rem; font-weight: bold">
+                        <?php echo $article["nom"] ?>
+                    </h5>
+
+                    <p class="card-text text-center">
+                        <?php echo $article["description"] ?>
+                    </p>
+
+                    <p class="card-text text-center">
+                        <?php echo $article["prix"] ?> €
+                    </p>
+
+                    <div class="card-body">
+
+                        <!-- Bouton voir + -->
+                        <form action="./produit.php" method="GET">
+                            <input type="hidden" name="idArticle" value="<?php echo $article["id"] ?>">
+                            <input class="button button-ghost" id="btn_voir" type="submit" value="Voir +">
+                        </form>
+
+                        <!-- Bouton Ajout au panier -->
+                        <form action="./panier.php" method="GET">
+                            <input type="hidden" name="idArticle" value="<?php echo $article["id"] ?>">
+                            <input class="button button-full" id="btn_ajout" type="submit" value="Ajouter au panier">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin de la CARD Bootstrap -->
+
+    <?php
     }
 }
+
 
 // On crée une fonction qui nous permet d'ajouter un produit au panier
 
@@ -84,14 +162,14 @@ function showArticlesInCard()
 {
 
     foreach ($_SESSION["panier"] as $article) {
-?>
+    ?>
 
         <tr>
             <td><img src="<?php echo "./images/" . $article["image"] ?>" class="img-fluid rounded-start produit" alt="...">
             </td>
             <td>
                 <h5 class="card-title">
-                    <?php echo $article["name"] ?>
+                    <?php echo $article["nom"] ?>
                 </h5>
                 <p class="card-text">
                     <?php echo $article["description"] ?>
@@ -99,7 +177,7 @@ function showArticlesInCard()
             </td>
             <td>
                 <p class="card-text">
-                    <?php echo $article["price"] ?> €
+                    <?php echo $article["prix"] ?> €
                 </p>
             </td>
             <td>
@@ -125,7 +203,7 @@ function showArticlesInCard()
             </td>
             <td>
                 <?php
-                echo $article["quantite"] * $article["price"]
+                echo $article["quantite"] * $article["prix"]
                 ?> €
             </td>
         </tr>
@@ -164,7 +242,7 @@ function totalPriceArticle()
 {
     $total = 0;
     foreach ($_SESSION["panier"] as $article) {
-        $total += $article["quantite"] * $article["price"];
+        $total += $article["quantite"] * $article["prix"];
     }
     return $total;
 }

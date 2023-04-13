@@ -14,6 +14,11 @@ if (isset($_POST["videPanier"])) {
     deleteToCart();
 }
 
+// j'accède à cette page via la page connexion
+if (isset($_POST["firstName"])) {
+    connexionUser();
+}
+
 // var_dump(getArticles());
 
 ?>

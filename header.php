@@ -15,7 +15,13 @@
           <a class="nav-link" href="./panier.php"><i class="icone fa-solid fa-cart-shopping fa-2x"></i></br><span class="text_icone" style="font-weight: bold">Mon panier</span></a>
         </li>
         <li class="hover nav-item px-4">
-          <i class="icone fa-solid fa-user fa-2x pt-2"></i></br><span class="text_icone" style="font-weight: bold">Mon profil</span>
+        <a class="nav-link active" aria-current="page" href="./inscription.php"><i class="icone fa-solid fa-user fa-2x"></i></br><span class="text_icone" style="font-weight: bold">Inscription</span></a>
+        </li>
+        <li class="hover nav-item px-4">
+        <a class="nav-link active" aria-current="page" href="./connexion.php"><i class="icone fa-solid fa-user fa-2x"></i></br><span class="text_icone" style="font-weight: bold">Connexion</span></a>
+        </li>
+        <li class="hover nav-item px-4">
+        <a class="nav-link active" aria-current="page" href="./connexion.php"><i class="icone fa-solid fa-user fa-2x"></i></br><span class="text_icone" style="font-weight: bold">Mon compte</span></a>
         </li>
       </ul>
     </div>

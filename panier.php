@@ -85,9 +85,11 @@ if (isset($_POST["videPanier"])) {
                     </div>
                     <div class="modal-body">
                         Montant total HT : <?php echo totalPriceArticle(); ?> € <br />
-                        Montant total TTC : <?php echo number_format(totalPriceArticle() * 1.2, 2, ",") ?> € <br />
+                        <!-- Montant total TTC : <?php echo number_format(totalPriceArticle() * 1.2, 2, ".") ?> € <br /> -->
+                        Montant total TTC : <?php echo totalPriceArticle()?> € <br />
                         Frais de port : 5,00 € <br />
-                        Montant total : <?php echo number_format(5 + (totalPriceArticle() * 1.2), 2, ","); ?> €
+                        <!-- Montant total : <?php echo number_format(5 + (totalPriceArticle() * 1.2), 2, "."); ?> € -->
+                        Montant total : <?php echo(5 + totalPriceArticle());?> €
                     </div>
                     <div class="modal-footer">
 

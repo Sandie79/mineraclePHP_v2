@@ -217,6 +217,25 @@ function createAdresse($user_id) {
     ));
 }
 
+// ***************** récupérer l'adresse du client en bdd ************************
+
+function getUserAddresses()
+{
+    $db = getConnection();
+
+    $query = $db->prepare('SELECT * FROM adresses WHERE id_client = ?');
+    $query->execute([$_SESSION['id']]);
+    return $query->fetchAll();
+}
+
+
+// ***************** définir / mettre à jour l'adresse de la session ************************
+
+function setSessionAddresses()
+{
+    $_SESSION['adresses'] = getUserAddresses();
+}
+
 // Vérifier sir l'utilisateur existe bien dans la base de données
 // ***************** se connecter  ************************
 
@@ -256,12 +275,18 @@ function logIn()
             $_SESSION['prenom'] = $result['prenom'];
             $_SESSION['email'] = $userEmail;
             setSessionAddresses();
-            echo '<script>alert(\'Vous êtes connecté !\')</script>';
+            echo '<script>alert(\'Vous êtes connecté(e) !\')</script>';
             // sinon, on renvoie un message d'erreur (volontairement imprécis pour ne pas aider les hackers)
         } else {
             echo '<script>alert(\'E-mail ou mot de passe incorrect !\')</script>';
         }
     }
+}
+
+// fonction se déconnecter
+function deconnexion() {
+    $_SESSION=[];
+    echo '<script>alert(\'Vous êtes déconnecté(e) !\')</script>';
 }
 
 
@@ -506,3 +531,53 @@ function deleteToCart()
     $_SESSION["panier"] = [];
     echo "<script> alert(\"Votre panier est vide !\");</script>";
 }
+
+// fonction modifier le mot de passe
+function modifMdp()
+{
+    if (!checkEmptyFields()) {  // on vérifie d'abord si il n'y a pas de champs vides. Si oui, message d'erreur et fin de la fonction.
+
+        $oldPassword = getUserPassword();   // on récupère le mdp actuel en base
+        $oldPassword = $oldPassword['mot_de_passe'];
+
+        // on vérifie le mdp actuel saisi par rapport à l'actuel en base
+        $isPasswordCorrect = password_verify(strip_tags($_POST['oldPassword']), $oldPassword);
+
+        // si mdp actuel saisi = mdp actuel en base, on passe à la suite. Sinon fin de la fonction et message d'erreur
+        if ($isPasswordCorrect) {
+
+            // on nettoie le nouveau mdp choisi
+            $newPassword = strip_tags($_POST['newPassword']);
+
+            // on vérifie que le nouveau mdp choisi respecte la regex. Si pas bon => sortie et message d'erreur
+            if (checkPassword($newPassword)) {
+
+                //si nouveau mdp ok => on le sauvegarde en le hâchant avec password_hash()
+                $db = getConnection();
+                $query = $db->prepare('UPDATE clients SET mot_de_passe = :newPassword WHERE id = :id');
+                $query->execute(array(
+                    'newPassword' => password_hash($newPassword, PASSWORD_DEFAULT),
+                    'id' => $_SESSION['id']
+                ));
+
+                echo "<script>alert(\"Mot de passe modifié avec succès\")</script>";
+            } else {
+                echo "<script>alert(\"Attention : sécurité du mot de passe insuffisante ! \")</script>";
+            };
+        } else {
+            echo "<script>alert(\"Erreur : l'ancien mot de passe saisi est incorrect\")</script>";
+        }
+    } else {
+        echo "<script>alert(\"Attention : un ou plusieurs champs vides ! \")</script>";
+    }
+}
+
+// fonction pour récupérer le mot de passe de l'utilisateur
+function getUserPassword() {
+    $db = getConnection();
+
+   $query = $db->prepare('SELECT mot_de_passe FROM clients WHERE id = ?');
+    $query->execute([$_SESSION['id']]);
+    return $query->fetch();
+}
+

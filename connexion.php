@@ -7,6 +7,10 @@ if (isset($_POST["firstName"])) {
     createUser();
 }
 
+if (isset($_POST["newPassword"])) {
+    modifMdp();
+}
+
 //var_dump(($_POST["email"]));
 
 ?>

@@ -15,11 +15,17 @@ if (isset($_POST["videPanier"])) {
 }
 
 // j'accède à cette page via la page connexion
-if (isset($_POST["firstName"])) {
-    connexionUser();
+if (isset($_POST["email"])) {
+    logIn();
+}
+
+// se déconnecter
+if (isset($_POST["deconnexion"])) {
+    deconnexion();
 }
 
 // var_dump(getArticles());
+//  var_dump($_SESSION);
 
 ?>
 
@@ -28,8 +34,6 @@ if (isset($_POST["firstName"])) {
     <?php include("./header.php") ?>
 
     <main>
-
-
 
         <div class="container-fluid">
             <div class="row">
